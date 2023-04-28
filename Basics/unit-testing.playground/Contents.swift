@@ -14,6 +14,13 @@ extension Product {
     }
 }
 
+extension Product {
+    func discountedPrice(for coupon: Coupon) -> Double {
+        let multiplier = 1 - coupon.discount / 100
+        return price * multiplier
+    }
+}
+
 class ProductTests: XCTestCase {
     func testApplyingCoupon() {
         // Given
@@ -26,6 +33,8 @@ class ProductTests: XCTestCase {
         // Then
         XCTAssertEqual(product.price, 20)
     }
+    
+    
 }
 
 // --- Using a test case's setUp method ---
@@ -54,6 +63,27 @@ class ShoppingCartTests: XCTestCase {
         // Then
         XCTAssertEqual(shoppingCart.totalPrice, 35)
     }
+    
+    func testNumberOfProducts() {
+            shoppingCart.add(Product(name: "Book", price: 20))
+            shoppingCart.add(Product(name: "Movie", price: 15))
+
+            // Given
+            XCTAssertEqual(shoppingCart.numberOfProducts(), 2)
+            
+            // When
+            shoppingCart.add(Product(name: "CD", price: 10))
+            
+            // Then
+            XCTAssertEqual(shoppingCart.numberOfProducts(), 3)
+        
+            // When
+            shoppingCart.removeProduct(at: 1)
+
+            // THen
+            XCTAssertEqual(shoppingCart.numberOfProducts(), 2)
+        }
+    
 }
 
 // --- Running all of our unit tests within the playground ---

@@ -35,6 +35,15 @@ public class ShoppingCart {
     public func add(_ product: Product) {
         products.append(product)
     }
+    
+    
+    public func removeProduct(at index: Int) {
+        products.remove(at: index)
+    }
+    
+    public func numberOfProducts() -> Int {
+          return products.count
+      }
 }
 
 public extension ShoppingCart {
